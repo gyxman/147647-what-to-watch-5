@@ -7,14 +7,15 @@ import MyList from "../my-list/my-list";
 import Movie from "../movie/movie";
 import AddReview from "../add-review/add-review";
 import Player from "../player/player";
+import MoviePropType from '../../proptypes/movie-proptypes';
 
 const App = (props) => {
-  const {movie} = props;
+  const {movies} = props;
 
   return <BrowserRouter>
     <Switch>
       <Route path='/' exact>
-        <Main movie={movie} />
+        <Main movies={movies} />
       </Route>
       <Route path='/login' exact>
         <SignIn />
@@ -36,11 +37,9 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  movie: PropTypes.shape({
-    name: PropTypes.string,
-    genre: PropTypes.string,
-    date: PropTypes.number
-  }),
+  movies: PropTypes.arrayOf(
+      PropTypes.shape(MoviePropType)
+  ).isRequired
 };
 
 export default App;

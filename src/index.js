@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./components/app/app";
+import movies from './mocks/movies';
 
-const MOVIE = {
-  name: `The Grand Budapest Hotel`,
-  genre: `Drama`,
-  date: 2014
-};
-
-ReactDOM.render(<App movie={MOVIE} />, document.querySelector(`#root`));
+ReactDOM.render(<App movies={movies} />, document.querySelector(`#root`));
 
