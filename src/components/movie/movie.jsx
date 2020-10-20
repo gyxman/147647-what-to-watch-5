@@ -1,6 +1,9 @@
 import React, {Fragment} from 'react';
+import PropTypes from "prop-types";
 
-const Movie = () => {
+const Movie = (props) => {
+  const {renderPlayer} = props;
+
   return <Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
@@ -56,7 +59,7 @@ const Movie = () => {
       <div className="movie-card__wrap movie-card__translate-top">
         <div className="movie-card__info">
           <div className="movie-card__poster movie-card__poster--big">
-            <img src="/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            {renderPlayer(`https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`, `/img/the-grand-budapest-hotel-poster.jpg`)}
           </div>
 
           <div className="movie-card__desc">
@@ -154,6 +157,10 @@ const Movie = () => {
       </footer>
     </div>
   </Fragment>;
+};
+
+Movie.propTypes = {
+  renderPlayer: PropTypes.func.isRequired,
 };
 
 export default Movie;
