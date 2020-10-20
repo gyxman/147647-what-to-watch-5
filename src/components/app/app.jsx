@@ -8,6 +8,9 @@ import Movie from "../movie/movie";
 import AddReview from "../add-review/add-review";
 import Player from "../player/player";
 import MoviePropType from '../../proptypes/movie-proptypes';
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
+
+const MovieWrapped = withVideoPlayer(Movie);
 
 const App = (props) => {
   const {movies} = props;
@@ -24,7 +27,7 @@ const App = (props) => {
         <MyList />
       </Route>
       <Route path='/films/:id' exact>
-        <Movie />
+        <MovieWrapped />
       </Route>
       <Route path='/films/:id/review' exact>
         <AddReview />
