@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Main from "../main/main";
 import SignIn from "../sign-in/sign-in";
@@ -7,18 +6,15 @@ import MyList from "../my-list/my-list";
 import Movie from "../movie/movie";
 import AddReview from "../add-review/add-review";
 import Player from "../player/player";
-import MoviePropType from '../../proptypes/movie-proptypes';
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
 
 const MovieWrapped = withVideoPlayer(Movie);
 
-const App = (props) => {
-  const {movies} = props;
-
+const App = () => {
   return <BrowserRouter>
     <Switch>
       <Route path='/' exact>
-        <Main movies={movies} />
+        <Main />
       </Route>
       <Route path='/login' exact>
         <SignIn />
@@ -39,11 +35,7 @@ const App = (props) => {
   </BrowserRouter>;
 };
 
-App.propTypes = {
-  movies: PropTypes.arrayOf(
-      PropTypes.shape(MoviePropType)
-  ).isRequired
-};
+App.propTypes = {};
 
 export default App;
 

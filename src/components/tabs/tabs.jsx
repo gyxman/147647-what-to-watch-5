@@ -53,4 +53,6 @@ class Tabs extends PureComponent {
 
 }
 
+Tabs.propTypes = {};
+
 export default Tabs;

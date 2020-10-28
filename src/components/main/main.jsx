@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from "../movies-list/movies-list";
+import GenresList from "../genres-list/genres-list";
+import Genres from '../../mocks/genres';
+import {connect} from "react-redux";
 
 const Main = (props) => {
   const {movies} = props;
@@ -68,38 +71,7 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <ul className="catalog__genres-list">
-          <li className="catalog__genres-item catalog__genres-item--active">
-            <a href="#" className="catalog__genres-link">All genres</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Comedies</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Crime</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Documentary</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Dramas</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Horror</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Kids & Family</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Romance</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Sci-Fi</a>
-          </li>
-          <li className="catalog__genres-item">
-            <a href="#" className="catalog__genres-link">Thrillers</a>
-          </li>
-        </ul>
+        <GenresList genres={Genres} />
 
         <div className="catalog__movies-list">
           <MoviesList movies={movies} />
@@ -137,4 +109,9 @@ Main.propTypes = {
   )
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+});
+
+export {Main};
+export default connect(mapStateToProps)(Main);
