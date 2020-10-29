@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoviesList from "../movies-list/movies-list";
 import GenresList from "../genres-list/genres-list";
 import Genres from '../../mocks/genres';
 import {connect} from "react-redux";
+import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
+import {MOVIES_LIMIT} from "../../const";
 
 const Main = (props) => {
   const {movies} = props;
@@ -51,13 +52,13 @@ const Main = (props) => {
             <div className="movie-card__buttons">
               <button className="btn btn--play movie-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s" />
+                  <use xlinkHref="#play-s"/>
                 </svg>
                 <span>Play</span>
               </button>
               <button className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add" />
+                  <use xlinkHref="#add"/>
                 </svg>
                 <span>My list</span>
               </button>
@@ -71,15 +72,9 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList genres={Genres} />
+        <GenresList genres={Genres}/>
 
-        <div className="catalog__movies-list">
-          <MoviesList movies={movies} />
-        </div>
-
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
+        <MoviesWithShowMoreButton movies={movies} limit={MOVIES_LIMIT}/>
       </section>
 
       <footer className="page-footer">

@@ -21,9 +21,9 @@ class MoviesList extends React.PureComponent {
   render() {
     const {movies} = this.props;
 
-    return <React.Fragment>
+    return <div className="catalog__movies-list">
       {movies.map((movie) => (<MovieCard key={movie.id + movie.name} movie={movie} onHover={this.handleHover} />))}
-    </React.Fragment>;
+    </div>;
   }
 }
 
