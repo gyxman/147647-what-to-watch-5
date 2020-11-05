@@ -5,6 +5,10 @@ import Genres from '../../mocks/genres';
 import {connect} from "react-redux";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
 import {MOVIES_LIMIT} from "../../const";
+import withShowMore from "../../hocs/with-show-more/with-show-more";
+import MoviePropType from "../../proptypes/movie-proptypes";
+
+const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
   const {movies} = props;
@@ -74,7 +78,7 @@ const Main = (props) => {
 
         <GenresList genres={Genres}/>
 
-        <MoviesWithShowMoreButton movies={movies} limit={MOVIES_LIMIT}/>
+        <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT}/>
       </section>
 
       <footer className="page-footer">
@@ -96,12 +100,8 @@ const Main = (props) => {
 
 Main.propTypes = {
   movies: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        genre: PropTypes.string,
-        date: PropTypes.number
-      })
-  )
+      PropTypes.shape(MoviePropType)
+  ).isRequired,
 };
 
 const mapStateToProps = (state) => ({

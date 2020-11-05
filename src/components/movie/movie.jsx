@@ -1,9 +1,13 @@
 import React, {Fragment} from 'react';
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs";
-import MoviesList from "../movies-list/movies-list";
-// TODO сделать проброс фильмов и определение релевантных и лимит 4
 import movies from '../../mocks/movies';
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import withShowMore from "../../hocs/with-show-more/with-show-more";
+import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
+
+const TabsWrapped = withActiveItem(Tabs);
+const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Movie = (props) => {
   const {renderPlayer} = props;
@@ -67,7 +71,7 @@ const Movie = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <Tabs />
+            <TabsWrapped />
           </div>
         </div>
       </div>
@@ -77,7 +81,7 @@ const Movie = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <MoviesList movies={movies} />
+        <MoviesWithShowMoreButtonWrapped movies={movies} />
       </section>
 
       <footer className="page-footer">
