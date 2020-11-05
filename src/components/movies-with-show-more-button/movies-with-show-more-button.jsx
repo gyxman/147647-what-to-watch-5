@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import MoviePropType from "../../proptypes/movie-proptypes";
 import ShowMoreButton from "../show-more-button/show-more-button";
 import MoviesList from "../movies-list/movies-list";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+
+const MoviesListWrapper = withActiveItem(MoviesList);
 
 class MoviesWithShowMoreButton extends PureComponent {
   constructor(props) {
@@ -33,7 +36,7 @@ class MoviesWithShowMoreButton extends PureComponent {
     const {currentStep, showButton} = this.state;
 
     return <React.Fragment>
-      <MoviesList movies={movies.slice(0, limit * currentStep)} />
+      <MoviesListWrapper movies={movies.slice(0, limit * currentStep)} />
 
       {showButton &&
       <ShowMoreButton onClick={this.onButtonClick} />
