@@ -9,17 +9,20 @@ const withActiveItem = (Component) => {
         activeItem: null,
       };
 
-      this.handleHover = this.handleHover.bind(this);
+      this.handleAction = this.handleAction.bind(this);
     }
 
-    handleHover(id) {
+    handleAction(id) {
       this.setState(() => ({activeItem: id}));
     }
 
     render() {
+      const {activeItem} = this.state;
+
       return <Component
         {...this.props}
-        handleHover={this.handleHover}
+        handleAction={this.handleAction}
+        activeItem={activeItem}
       />;
     }
   }

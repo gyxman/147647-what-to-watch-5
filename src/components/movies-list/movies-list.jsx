@@ -4,10 +4,10 @@ import MovieCard from "../movie-card/movie-card";
 import MoviePropType from "../../proptypes/movie-proptypes";
 
 const MoviesList = (props) => {
-  const {movies, handleHover} = props;
+  const {movies, handleAction} = props;
 
   return <div className="catalog__movies-list">
-    {movies.map((movie) => (<MovieCard key={movie.id + movie.name} movie={movie} onHover={handleHover} />))}
+    {movies.map((movie) => (<MovieCard key={movie.id + movie.name} movie={movie} onHover={handleAction} />))}
   </div>;
 
 };
@@ -16,7 +16,7 @@ MoviesList.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
   ).isRequired,
-  handleHover: PropTypes.func.isRequired
+  handleAction: PropTypes.func.isRequired
 };
 
 export default MoviesList;

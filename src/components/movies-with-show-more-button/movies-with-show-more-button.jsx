@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MoviePropType from "../../proptypes/movie-proptypes";
 import ShowMoreButton from "../show-more-button/show-more-button";
@@ -7,49 +7,26 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
 const MoviesListWrapper = withActiveItem(MoviesList);
 
-class MoviesWithShowMoreButton extends PureComponent {
-  constructor(props) {
-    super(props);
+const MoviesWithShowMoreButton = (props) => {
+  const {limit, movies, currentStep, showButton, onButtonClick} = props;
 
-    this.state = {
-      currentStep: 1,
-      showButton: false,
-    };
+  return <React.Fragment>
+    <MoviesListWrapper movies={movies.slice(0, limit * currentStep)} />
 
-    this.onButtonClick = this.onButtonClick.bind(this);
-  }
-
-  onButtonClick() {
-    const {limit, movies} = this.props;
-
-    this.setState((prevState) => ({currentStep: prevState.currentStep + 1, showButton: limit * (prevState.currentStep + 1) < movies.length}));
-  }
-
-  componentDidMount() {
-    const {limit, movies} = this.props;
-
-    this.setState((prevState) => ({showButton: limit * prevState.currentStep < movies.length}));
-  }
-
-  render() {
-    const {limit, movies} = this.props;
-    const {currentStep, showButton} = this.state;
-
-    return <React.Fragment>
-      <MoviesListWrapper movies={movies.slice(0, limit * currentStep)} />
-
-      {showButton &&
-      <ShowMoreButton onClick={this.onButtonClick} />
-      }
-    </React.Fragment>;
-  }
-}
+    {showButton &&
+      <ShowMoreButton onClick={onButtonClick} />
+    }
+  </React.Fragment>;
+};
 
 MoviesWithShowMoreButton.propTypes = {
   limit: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
-  ).isRequired
+  ).isRequired,
+  currentStep: PropTypes.number.isRequired,
+  showButton: PropTypes.bool.isRequired,
+  onButtonClick: PropTypes.func.isRequired
 };
 
 export default MoviesWithShowMoreButton;

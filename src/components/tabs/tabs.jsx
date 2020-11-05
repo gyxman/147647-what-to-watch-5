@@ -1,58 +1,47 @@
-import React, {PureComponent} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import TabOverview from "../tab-overview/tab-overview";
 import TabDetails from "../tab-details/tab-details";
 import TabReviews from "../tab-reviews/tab-reviews";
 
-class Tabs extends PureComponent {
-  constructor(props) {
-    super(props);
+const Tabs = (props) => {
+  const {activeItem, handleAction} = props;
 
-    this.state = {
-      activeTab: 0,
-    };
+  const tabs = [`Overview`, `Details`, `Reviews`];
 
-    this.tabs = [`Overview`, `Details`, `Reviews`];
-
-    this.handleTabChange = this.handleTabChange.bind(this);
-  }
-
-  handleTabChange(index) {
-    this.setState(() => ({activeTab: index}));
-  }
-
-  renderTab(index) {
-    const tabs = [
-      {getTab: () => <TabOverview />},
-      {getTab: () => <TabDetails />},
-      {getTab: () => <TabReviews />}
+  const renderTab = (index) => {
+    const tabsComponents = [
+      {component: <TabOverview/>},
+      {component: <TabDetails/>},
+      {component: <TabReviews/>},
     ];
 
-    return tabs[index].getTab();
-  }
+    return tabsComponents[index].component;
+  };
 
-  render() {
-    const {activeTab} = this.state;
+  return <React.Fragment>
+    <nav className="movie-nav movie-card__nav">
+      <ul className="movie-nav__list">
+        {tabs.map((tab, index) =>
+          (<li key={index + tab} className={`movie-nav__item ${index === activeItem && `movie-nav__item--active`}`}>
+            <a href="#" className="movie-nav__link" onClick={(e) => {
+              e.preventDefault();
+              handleAction(index);
+            }}>
+              {tab}
+            </a>
+          </li>))}
+      </ul>
+    </nav>
 
-    return <React.Fragment>
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          {this.tabs.map((tab, index) =>
-            (<li key={index + tab} className={`movie-nav__item ${index === activeTab && `movie-nav__item--active`}`}>
-              <a href="#" className="movie-nav__link" onClick={(e) => {
-                e.preventDefault(); this.handleTabChange(index);
-              }}>
-                {tab}
-              </a>
-            </li>))}
-        </ul>
-      </nav>
+    {renderTab(activeItem)}
+  </React.Fragment>;
 
-      {this.renderTab(activeTab)}
-    </React.Fragment>;
-  }
+};
 
-}
-
-Tabs.propTypes = {};
+Tabs.propTypes = {
+  activeItem: PropTypes.string.isRequired,
+  handleAction: PropTypes.func.isRequired
+};
 
 export default Tabs;
