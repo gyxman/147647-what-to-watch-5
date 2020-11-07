@@ -5,12 +5,13 @@ import movies from '../../mocks/movies';
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
+import {MOVIES_LIMIT} from "../../const";
 
 const TabsWrapped = withActiveItem(Tabs);
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Movie = (props) => {
-  const {renderPlayer} = props;
+  const {renderPlayer, openFullSize} = props;
 
   return <Fragment>
     <section className="movie-card movie-card--full">
@@ -46,7 +47,7 @@ const Movie = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button onClick={openFullSize} className="btn btn--play movie-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s" />
                 </svg>
@@ -81,7 +82,7 @@ const Movie = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <MoviesWithShowMoreButtonWrapped movies={movies} />
+        <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT} />
       </section>
 
       <footer className="page-footer">
@@ -103,6 +104,7 @@ const Movie = (props) => {
 
 Movie.propTypes = {
   renderPlayer: PropTypes.func.isRequired,
+  openFullSize: PropTypes.func.isRequired,
 };
 
 export default Movie;

@@ -34,13 +34,13 @@ const Tabs = (props) => {
       </ul>
     </nav>
 
-    {renderTab(activeItem)}
+    {renderTab(activeItem || 0)}
   </React.Fragment>;
 
 };
 
 Tabs.propTypes = {
-  activeItem: PropTypes.string.isRequired,
+  activeItem: PropTypes.string,
   handleAction: PropTypes.func.isRequired
 };
 
