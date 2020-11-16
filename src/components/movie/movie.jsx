@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs";
-import movies from '../../mocks/movies';
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
@@ -82,7 +81,7 @@ const Movie = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT} />
+        <MoviesWithShowMoreButtonWrapped movies={[]} limit={MOVIES_LIMIT} />
       </section>
 
       <footer className="page-footer">
