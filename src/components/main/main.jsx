@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GenresList from "../genres-list/genres-list";
-import Genres from '../../mocks/genres';
 import {connect} from "react-redux";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
 import {MOVIES_LIMIT} from "../../const";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviePropType from "../../proptypes/movie-proptypes";
+import {getMoviesByGenre} from "../../store/selectors";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
@@ -76,7 +76,7 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList genres={Genres}/>
+        <GenresList genres={[]}/>
 
         <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT}/>
       </section>
@@ -105,7 +105,7 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
+  movies: getMoviesByGenre(state),
 });
 
 export {Main};
