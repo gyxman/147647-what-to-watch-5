@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import GenresList from "../genres-list/genres-list";
 import {connect} from "react-redux";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
-import {MOVIES_LIMIT} from "../../const";
+import {AppRoute, AuthorizationStatus, MOVIES_LIMIT} from "../../const";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import {getMoviesByGenre} from "../../store/selectors";
+import {Link} from "react-router-dom";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
-  const {movies} = props;
+  const {movies, authorizationStatus} = props;
   const movie = movies[0];
 
   return <React.Fragment>
@@ -33,9 +34,12 @@ const Main = (props) => {
         </div>
 
         <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
+          {authorizationStatus === AuthorizationStatus.AUTH
+            ? <div className="user-block__avatar">
+              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+            </div>
+            : <Link className="user-block__link" to={AppRoute.LOGIN}>Sign in</Link>
+          }
         </div>
       </header>
 
@@ -102,10 +106,12 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
   ).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movies: getMoviesByGenre(state),
+  authorizationStatus: state.USER.authorizationStatus,
 });
 
 export {Main};
