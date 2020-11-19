@@ -1,5 +1,8 @@
 import React from 'react';
 import AddReviewForm from "../add-review-form/add-review-form";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+
+const AddReviewFormWrapped = withActiveItem(AddReviewForm);
 
 const AddReview = () => {
   return <section className="movie-card movie-card--full">
@@ -42,7 +45,7 @@ const AddReview = () => {
       </div>
     </div>
 
-    <AddReviewForm />
+    <AddReviewFormWrapped />
 
   </section>;
 };

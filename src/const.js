@@ -5,11 +5,14 @@ export const MOVIES_LIMIT = 8;
 export const APIRoute = {
   MOVIES: `/films`,
   LOGIN: `/login`,
+  COMMENTS: `/comments`
 };
 
 export const AppRoute = {
-  LOGIN: `/login`,
   ROOT: `/`,
+  LOGIN: `/login`,
+  REVIEW: `/review`,
+  MOVIES: `/films`
 };
 
 export const AuthorizationStatus = {
