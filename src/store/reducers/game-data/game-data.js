@@ -4,6 +4,7 @@ import {ActionType} from "../../action";
 const initialState = {
   movies: [],
   currentMovie: null,
+  commentsForCurrentMovie: []
 };
 
 const gameData = (state = initialState, action) => {

@@ -4,16 +4,17 @@ import Tabs from "../tabs/tabs";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
-import {MOVIES_LIMIT} from "../../const";
+import {AppRoute, MOVIES_LIMIT} from "../../const";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import {connect} from "react-redux";
 import {fetchMovieById} from "../../store/api-actions";
+import {Link} from "react-router-dom";
 
 const TabsWrapped = withActiveItem(Tabs);
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Movie = (props) => {
-  const {renderPlayer, openFullSize, movie, onLoad} = props;
+  const {renderPlayer, openFullSize, movie, authorizationStatus, onLoad} = props;
 
   function renderMovie() {
     if (!movie) {
@@ -70,7 +71,7 @@ const Movie = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                {authorizationStatus && <Link className="btn movie-card__button" to={(location) => `${location.pathname}${AppRoute.REVIEW}`}>Add review</Link>}
               </div>
             </div>
           </div>
@@ -120,11 +121,13 @@ Movie.propTypes = {
   renderPlayer: PropTypes.func.isRequired,
   openFullSize: PropTypes.func.isRequired,
   movie: PropTypes.shape(MoviePropType),
+  authorizationStatus: PropTypes.string.isRequired,
   onLoad: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
+const mapStateToProps = ({DATA, USER}) => ({
   movie: DATA.currentMovie,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
