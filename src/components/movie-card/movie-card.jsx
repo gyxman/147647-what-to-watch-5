@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import MoviePropType from "../../proptypes/movie-proptypes";
+import {AppRoute} from "../../const";
 
 const MovieCard = (props) => {
   const {movie: {id, name, posterImage}, onHover} = props;
@@ -12,7 +13,7 @@ const MovieCard = (props) => {
         width="280" height="175" />
     </div>
     <h3 className="small-movie-card__title">
-      <Link className="small-movie-card__link" to={`films/` + id}>{name}</Link>
+      <Link className="small-movie-card__link" to={`${AppRoute.MOVIES}/${id}`}>{name}</Link>
     </h3>
   </article>;
 };

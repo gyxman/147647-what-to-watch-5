@@ -23,9 +23,10 @@ const Movie = (props) => {
   console.log(movie);
 
   function renderMovie() {
-    if (!movie) {
-      const path = window.location.pathname;
-      const id = path[path.length - 1];
+    const path = window.location.pathname;
+    const id = path[path.length - 1];
+
+    if (!movie || movie.id !== Number(id)) {
       onLoad(id);
 
       return `Загрузка...`;
