@@ -1,8 +1,8 @@
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const";
 import {
-  authorizedSuccessAction,
+  authorizedSuccessAction, loadCommentsByIdAction, loadGenresAction,
   loadMovieByIdAction,
-  loadMoviesAction,
+  loadMoviesAction, loadPromoMovieAction,
   redirectToRouteAction,
   requireAuthorizationAction,
   sendNewCommentAction
@@ -11,10 +11,20 @@ import {
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.MOVIES)
     .then(({data}) => dispatch(loadMoviesAction(data)))
+    .then(({payload}) => dispatch(loadGenresAction(payload)))
+);
+
+export const fetchPromoMovie = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PROMO_MOVIE)
+    .then(({data}) => dispatch(loadPromoMovieAction(data)))
 );
 
 export const fetchMovieById = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.MOVIES}/${id}`).then(({data}) => dispatch(loadMovieByIdAction(data)))
+);
+
+export const fetchCommentsById = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}/${id}`).then(({data}) => dispatch(loadCommentsByIdAction(data)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

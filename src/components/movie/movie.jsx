@@ -4,18 +4,23 @@ import Tabs from "../tabs/tabs";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
-import {AppRoute, MOVIES_LIMIT} from "../../const";
+import {AppRoute, MOVIES_LIMIT_FOR_RELATED} from "../../const";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import {connect} from "react-redux";
 import {fetchMovieById} from "../../store/api-actions";
 import {Link} from "react-router-dom";
 import Header from "../header/header";
+import Footer from "../footer/footer";
+import {addMovieToFavoritesAction} from "../../store/action";
+import {getMoviesByGenre} from "../../utils";
 
 const TabsWrapped = withActiveItem(Tabs);
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Movie = (props) => {
-  const {renderPlayer, openFullSize, movie, authorizationStatus, onLoad} = props;
+  const {renderPlayer, openFullSize, movies, movie, authorizationStatus, onLoad, addMovieToFavorites} = props;
+
+  console.log(movie);
 
   function renderMovie() {
     if (!movie) {
@@ -30,35 +35,38 @@ const Movie = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src="/img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={movie.backgroundImage} alt={movie.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header className={`movie-card__head`} />
+          <Header className={`movie-card__head`}/>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="movie-card__title">{movie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">Drama</span>
-                <span className="movie-card__year">2014</span>
+                <span className="movie-card__genre">{movie.genre}</span>
+                <span className="movie-card__year">{movie.released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <button onClick={openFullSize} className="btn btn--play movie-card__button" type="button">
+                <button onClick={() => openFullSize()} className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s" />
+                    <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                <button onClick={() => addMovieToFavorites(movie)} className="btn btn--list movie-card__button"
+                  type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add" />
+                    <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
                 </button>
-                {authorizationStatus && <Link className="btn movie-card__button" to={(location) => `${location.pathname}${AppRoute.REVIEW}`}>Add review</Link>}
+                {authorizationStatus &&
+                <Link className="btn movie-card__button" to={(location) => `${location.pathname}${AppRoute.REVIEW}`}>Add
+                  review</Link>}
               </div>
             </div>
           </div>
@@ -71,7 +79,7 @@ const Movie = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <TabsWrapped />
+              <TabsWrapped movie={movie}/>
             </div>
           </div>
         </div>
@@ -81,22 +89,11 @@ const Movie = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesWithShowMoreButtonWrapped movies={[]} limit={MOVIES_LIMIT} />
+          <MoviesWithShowMoreButtonWrapped movies={getMoviesByGenre(movies, movie.genre)}
+            limit={MOVIES_LIMIT_FOR_RELATED}/>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </Fragment>;
   }
@@ -112,15 +109,19 @@ Movie.propTypes = {
   onLoad: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  movie: DATA.currentMovie,
+const mapStateToProps = ({DATA, PROCESS, USER}) => ({
+  movies: DATA.movies,
+  movie: PROCESS.currentMovie,
   authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(id) {
     dispatch(fetchMovieById(id));
-  }
+  },
+  addMovieToFavorites(movie) {
+    dispatch(addMovieToFavoritesAction(movie));
+  },
 });
 
 export {Movie};

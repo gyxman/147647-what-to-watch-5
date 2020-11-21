@@ -6,20 +6,21 @@ import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-wit
 import {MOVIES_LIMIT} from "../../const";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviePropType from "../../proptypes/movie-proptypes";
-import {getMoviesByGenre} from "../../store/selectors";
+import {getMoviesByActiveGenre} from "../../store/selectors";
 import Header from "../header/header";
+import {addMovieToFavoritesAction} from "../../store/action";
+import Footer from "../footer/footer";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
-  const {movies} = props;
-  const movie = movies[0];
+  const {movies, promoMovie, addMovieToFavorites} = props;
 
   return <React.Fragment>
     <section className="movie-card">
 
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+        <img src={promoMovie.backgroundImage} alt={promoMovie.name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -29,15 +30,15 @@ const Main = (props) => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"
+            <img src={promoMovie.posterImage} alt={promoMovie.name} width="218"
               height="327"/>
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{movie.name}</h2>
+            <h2 className="movie-card__title">{promoMovie.name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{movie.genre}</span>
-              <span className="movie-card__year">{movie.date}</span>
+              <span className="movie-card__genre">{promoMovie.genre}</span>
+              <span className="movie-card__year">{promoMovie.released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -47,7 +48,7 @@ const Main = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
+              <button onClick={() => addMovieToFavorites(promoMovie)} className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"/>
                 </svg>
@@ -63,24 +64,12 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList genres={[]}/>
+        <GenresList />
 
         <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT}/>
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   </React.Fragment>;
 };
@@ -89,11 +78,20 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
   ).isRequired,
+  promoMovie: PropTypes.shape(MoviePropType),
+  addMovieToFavorites: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  movies: getMoviesByGenre(state),
+  movies: getMoviesByActiveGenre(state),
+  promoMovie: state.DATA.promoMovie,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addMovieToFavorites(movie) {
+    dispatch(addMovieToFavoritesAction(movie));
+  },
 });
 
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

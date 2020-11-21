@@ -2,17 +2,17 @@ import React from "react";
 import {changeGenreAction} from "../../store/action";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ALL_GENRES} from "../../const";
+import {ALL_GENRES, GENRES_LIMIT} from "../../const";
 
 const GenresList = (props) => {
   const {activeGenre, genres, changeGenre} = props;
 
-  const genresList = [ALL_GENRES].concat(genres);
+  const genresList = [ALL_GENRES].concat(genres).slice(0, GENRES_LIMIT);
 
   return <ul className="catalog__genres-list">
     {genresList.map((genre, index) =>
       (<li key={index + genre}
-        className={`catalog__genres-item ${genre === activeGenre && `catalog__genres-item--active`}`}>
+        className={`catalog__genres-item ${genre === activeGenre ? `catalog__genres-item--active` : ``}`}>
         <a href="#" className="catalog__genres-link" onClick={(e) => {
           e.preventDefault();
           changeGenre(genre);
@@ -23,8 +23,9 @@ const GenresList = (props) => {
   </ul>;
 };
 
-const mapStateToProps = (state) => ({
-  activeGenre: state.genre,
+const mapStateToProps = ({PROCESS, DATA}) => ({
+  activeGenre: PROCESS.activeGenre,
+  genres: DATA.genres
 });
 
 const mapDispatchToProps = (dispatch) => ({

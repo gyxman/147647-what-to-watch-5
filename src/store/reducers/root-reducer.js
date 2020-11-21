@@ -1,16 +1,16 @@
 import {combineReducers} from "redux";
-import {gameData} from "./game-data/game-data";
-import {gameProcess} from "./game-process/game-process";
+import {data} from "./data/data";
+import {process} from "./process/process";
 import {user} from "./user/user";
 
 export const NameSpace = {
   DATA: `DATA`,
-  GAME: `GAME`,
+  PROCESS: `PROCESS`,
   USER: `USER`,
 };
 
 export default combineReducers({
-  [NameSpace.DATA]: gameData,
-  [NameSpace.GAME]: gameProcess,
+  [NameSpace.DATA]: data,
+  [NameSpace.PROCESS]: process,
   [NameSpace.USER]: user,
 });

@@ -1,9 +1,12 @@
 export const ALL_GENRES = `All genres`;
 
 export const MOVIES_LIMIT = 8;
+export const MOVIES_LIMIT_FOR_RELATED = 4;
+export const GENRES_LIMIT = 9;
 
 export const APIRoute = {
   MOVIES: `/films`,
+  PROMO_MOVIE: `/films/promo`,
   LOGIN: `/login`,
   COMMENTS: `/comments`
 };

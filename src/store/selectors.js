@@ -2,9 +2,9 @@ import {createSelector} from 'reselect';
 import {ALL_GENRES} from "../const";
 
 const getMovies = ({DATA}) => DATA.movies;
-const getGenre = ({GAME}) => GAME.genre;
+const getGenre = ({PROCESS}) => PROCESS.activeGenre;
 
-export const getMoviesByGenre = createSelector(
+export const getMoviesByActiveGenre = createSelector(
     [getMovies, getGenre],
     (movies, genre) => {
 
