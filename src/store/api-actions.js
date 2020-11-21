@@ -1,9 +1,10 @@
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const";
 import {
+  authorizedSuccessAction,
   loadMovieByIdAction,
   loadMoviesAction,
-  redirectToRoute,
-  requireAuthorization,
+  redirectToRouteAction,
+  requireAuthorizationAction,
   sendNewCommentAction
 } from "./action";
 
@@ -18,18 +19,20 @@ export const fetchMovieById = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({data}) => dispatch(authorizedSuccessAction(data)))
+    .then(() => dispatch(requireAuthorizationAction(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
+    .then(({data}) => dispatch(authorizedSuccessAction(data)))
+    .then(() => dispatch(requireAuthorizationAction(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRouteAction(AppRoute.ROOT)))
 );
 
 export const sendNewComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => dispatch(sendNewCommentAction(data)))
-    .then(() => dispatch(redirectToRoute(`${AppRoute.MOVIES}/${id}`)))
+    .then(() => dispatch(redirectToRouteAction(`${AppRoute.MOVIES}/${id}`)))
 );

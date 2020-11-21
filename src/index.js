@@ -8,12 +8,12 @@ import {createAPI} from "./services/api";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {checkAuth, fetchMoviesList} from "./store/api-actions";
-import {requireAuthorization} from "./store/action";
+import {requireAuthorizationAction} from "./store/action";
 import {AuthorizationStatus} from "./const";
 import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
-    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(requireAuthorizationAction(AuthorizationStatus.NO_AUTH))
 );
 
 

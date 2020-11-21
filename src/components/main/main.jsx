@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import GenresList from "../genres-list/genres-list";
 import {connect} from "react-redux";
 import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-with-show-more-button";
-import {AppRoute, AuthorizationStatus, MOVIES_LIMIT} from "../../const";
+import {MOVIES_LIMIT} from "../../const";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import {getMoviesByGenre} from "../../store/selectors";
-import {Link} from "react-router-dom";
+import Header from "../header/header";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
-  const {movies, authorizationStatus} = props;
+  const {movies} = props;
   const movie = movies[0];
 
   return <React.Fragment>
@@ -24,24 +24,7 @@ const Main = (props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header movie-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="user-block">
-          {authorizationStatus === AuthorizationStatus.AUTH
-            ? <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
-            : <Link className="user-block__link" to={AppRoute.LOGIN}>Sign in</Link>
-          }
-        </div>
-      </header>
+      <Header className={`movie-card__head`} />
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
@@ -106,12 +89,10 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
   ).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movies: getMoviesByGenre(state),
-  authorizationStatus: state.USER.authorizationStatus,
 });
 
 export {Main};

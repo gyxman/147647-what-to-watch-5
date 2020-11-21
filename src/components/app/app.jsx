@@ -8,28 +8,42 @@ import AddReview from "../add-review/add-review";
 import Player from "../player/player";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
 import browserHistory from "../../browser-history";
+import PrivateRoute from "../private-route/private-route";
+import {AppRoute} from "../../const";
 
 const MovieWrapped = withVideoPlayer(Movie);
 
 const App = () => {
   return <BrowserRouter history={browserHistory}>
     <Switch>
-      <Route path='/' exact>
+      <Route path={AppRoute.ROOT} exact>
         <Main />
       </Route>
-      <Route path='/login' exact>
+      <Route path={AppRoute.LOGIN} exact>
         <SignIn />
       </Route>
-      <Route path='/mylist' exact>
-        <MyList />
-      </Route>
-      <Route path='/films/:id' exact>
+      <PrivateRoute
+        exact
+        path={AppRoute.MY_LIST}
+        render={() => {
+          return (
+            <MyList />
+          );
+        }}
+      />
+      <Route path={AppRoute.MOVIE} exact>
         <MovieWrapped />
       </Route>
-      <Route path='/films/:id/review' exact>
-        <AddReview />
-      </Route>
-      <Route path='/player/:id' exact>
+      <PrivateRoute
+        exact
+        path={AppRoute.REVIEW_FULL}
+        render={() => {
+          return (
+            <AddReview />
+          );
+        }}
+      />
+      <Route path={AppRoute.PLAYER} exact>
         <Player />
       </Route>
     </Switch>

@@ -3,6 +3,7 @@ export const ActionType = {
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_MOVIE_BY_ID: `LOAD_MOVIE_BY_ID`,
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
+  AUTHORIZED_SUCCESS: `AUTHORIZED_SUCCESS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SEND_NEW_COMMENT: `SEND_NEW_COMMENT`,
 };
@@ -22,12 +23,17 @@ export const changeGenreAction = (genre) => ({
   payload: genre
 });
 
-export const requireAuthorization = (status) => ({
+export const requireAuthorizationAction = (status) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
 });
 
-export const redirectToRoute = (url) => ({
+export const authorizedSuccessAction = (user) => ({
+  type: ActionType.AUTHORIZED_SUCCESS,
+  payload: user,
+});
+
+export const redirectToRouteAction = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
 });

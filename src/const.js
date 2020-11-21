@@ -12,7 +12,11 @@ export const AppRoute = {
   ROOT: `/`,
   LOGIN: `/login`,
   REVIEW: `/review`,
-  MOVIES: `/films`
+  REVIEW_FULL: `/films/:id/review`,
+  MOVIES: `/films`,
+  MOVIE: `/films/:id`,
+  MY_LIST: `/mylist`,
+  PLAYER: `/player/:id`
 };
 
 export const AuthorizationStatus = {
