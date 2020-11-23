@@ -20,10 +20,8 @@ const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 const Movie = (props) => {
   const {renderPlayer, openFullSize, movies, movie, authorizationStatus, onLoad, addMovieToFavorites} = props;
 
-  console.log(movie);
-
   function renderMovie() {
-    const path = window.location.pathname;
+    const path = window.location.pathname.split(`/`);
     const id = path[path.length - 1];
 
     if (!movie || movie.id !== Number(id)) {
@@ -76,7 +74,7 @@ const Movie = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              {renderPlayer(`https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`, `/img/the-grand-budapest-hotel-poster.jpg`)}
+              {renderPlayer(`https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`, movie.posterImage)}
             </div>
 
             <div className="movie-card__desc">
@@ -106,8 +104,10 @@ Movie.propTypes = {
   renderPlayer: PropTypes.func.isRequired,
   openFullSize: PropTypes.func.isRequired,
   movie: PropTypes.shape(MoviePropType),
+  movies: PropTypes.arrayOf(PropTypes.shape(MoviePropType)),
   authorizationStatus: PropTypes.string.isRequired,
-  onLoad: PropTypes.func.isRequired
+  onLoad: PropTypes.func.isRequired,
+  addMovieToFavorites: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({DATA, PROCESS, USER}) => ({

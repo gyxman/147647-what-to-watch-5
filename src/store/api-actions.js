@@ -1,11 +1,11 @@
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const";
 import {
+  addErrorAction,
   authorizedSuccessAction, loadCommentsByIdAction, loadGenresAction,
   loadMovieByIdAction,
   loadMoviesAction, loadPromoMovieAction,
   redirectToRouteAction,
   requireAuthorizationAction,
-  sendNewCommentAction
 } from "./action";
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
@@ -41,8 +41,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(redirectToRouteAction(AppRoute.ROOT)))
 );
 
-export const sendNewComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
+export const sendNewComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
-    .then(({data}) => dispatch(sendNewCommentAction(data)))
     .then(() => dispatch(redirectToRouteAction(`${AppRoute.MOVIES}/${id}`)))
+    .catch(() => dispatch(addErrorAction(`Произошла ошибка, попробуйте позже`)))
 );

@@ -1,78 +1,43 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {sendNewComment} from "../../store/api-actions";
 
-class AddReviewForm extends PureComponent {
-  constructor(props) {
-    super(props);
+const AddReviewForm = (props) => {
+  const {handleFieldChange, handleSubmit, isLocked, handleAction, activeItem} = props;
 
-    this.state = {
-      rating: null,
-      comment: null
-    };
+  const ratings = [1, 2, 3, 4, 5];
 
-    this.ratings = new Array(5).fill(Math.random());
+  return <div className="add-review">
+    <form action="#" className="add-review__form" onSubmit={handleSubmit}>
+      <div className="rating">
+        <div className="rating__stars">
+          {ratings.map((val, index) =>
+            (<React.Fragment key={index + val}>
+              <input className="rating__input" id={`star-${++index}`} type="radio" name="rating" value={index}
+                onChange={handleFieldChange} onClick={() => handleAction(index)}
+                checked={activeItem ? index === activeItem : index === 5}/>
+              <label className="rating__label" htmlFor={`star-${index}`}>Rating {index}</label>
+            </React.Fragment>))}
+        </div>
+      </div>
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    const {rating, comment} = this.state;
-    const {onSubmit} = this.props;
-
-    onSubmit({id: 1, rating: rating * 2, comment});
-  }
-
-  handleFieldChange(event) {
-    const {name, value} = event.target;
-
-    this.setState(() => ({[name]: value}));
-  }
-
-  render() {
-    const {activeItem, handleAction} = this.props;
-
-    return <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={this.handleSubmit}>
-        <div className="rating">
-          <div className="rating__stars">
-            {this.ratings.map((val, index) =>
-              (<React.Fragment key={index + val}>
-                <input className="rating__input" id={`star-${++index}`} type="radio" name="rating" value={index}
-                  onChange={this.handleFieldChange} onClick={() => handleAction(index)}
-                  checked={index === activeItem}/>
-                <label className="rating__label" htmlFor={`star-${index}`}>Rating {index}</label>
-              </React.Fragment>))}
-          </div>
+      <div className="add-review__text">
+        <textarea className="add-review__textarea" name="comment" id="comment" placeholder="Review text"
+          onChange={handleFieldChange}/>
+        <div className="add-review__submit">
+          <button className="add-review__btn" type="submit" disabled={isLocked}>Post</button>
         </div>
 
-        <div className="add-review__text">
-          <textarea className="add-review__textarea" name="comment" id="comment" placeholder="Review text"
-            onChange={this.handleFieldChange}/>
-          <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
-          </div>
-
-        </div>
-      </form>
-    </div>;
-  }
-}
-
-AddReviewForm.propTypes = {
-  activeItem: PropTypes.number,
-  handleAction: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+      </div>
+    </form>
+  </div>;
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(commentData) {
-    dispatch(sendNewComment(commentData));
-  }
-});
+AddReviewForm.propTypes = {
+  handleFieldChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isLocked: PropTypes.bool.isRequired,
+  handleAction: PropTypes.func.isRequired,
+  activeItem: PropTypes.number,
+};
 
-export {AddReviewForm};
-export default connect(null, mapDispatchToProps)(AddReviewForm);
+export default AddReviewForm;

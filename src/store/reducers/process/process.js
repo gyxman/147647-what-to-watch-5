@@ -6,7 +6,8 @@ const initialState = {
   activeGenre: ALL_GENRES,
   currentMovie: null,
   commentsForCurrentMovie: [],
-  favoriteMovies: []
+  favoriteMovies: [],
+  error: null
 };
 
 const process = (state = initialState, action) => {
@@ -25,6 +26,10 @@ const process = (state = initialState, action) => {
       return extend(state, {
         favoriteMovies: state.favoriteMovies.push(action.payload),
       });
+    case ActionType.ADD_ERROR:
+      return extend(state, {error: action.payload});
+    case ActionType.REMOVE_ERROR:
+      return extend(state, {error: null});
   }
 
   return state;

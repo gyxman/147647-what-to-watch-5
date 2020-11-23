@@ -31,8 +31,11 @@ const App = () => {
           );
         }}
       />
-      <Route path={AppRoute.MOVIE} exact>
-        <MovieWrapped />
+      <Route path={AppRoute.MOVIE} exact render={() => {
+        return (
+          <MovieWrapped key={window.location.pathname} />
+        );
+      }}>
       </Route>
       <PrivateRoute
         exact

@@ -9,7 +9,8 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   AUTHORIZED_SUCCESS: `AUTHORIZED_SUCCESS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
-  SEND_NEW_COMMENT: `SEND_NEW_COMMENT`,
+  ADD_ERROR: `ADD_ERROR`,
+  REMOVE_ERROR: `REMOVE_ERROR`,
 };
 
 export const loadMoviesAction = (movies) => ({
@@ -62,8 +63,12 @@ export const redirectToRouteAction = (url) => ({
   payload: url,
 });
 
-export const sendNewCommentAction = (comments) => ({
-  type: ActionType.SEND_NEW_COMMENT,
-  payload: comments,
+export const addErrorAction = (error) => ({
+  type: ActionType.ADD_ERROR,
+  payload: error,
+});
+
+export const removeErrorAction = () => ({
+  type: ActionType.REMOVE_ERROR,
 });
 
