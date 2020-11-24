@@ -15,7 +15,7 @@ const AddReviewFormWrapped = withReviewForm(withActiveItem(AddReviewForm));
 const AddReview = (props) => {
   const {movie, onLoad, onSubmit, error, removeError} = props;
 
-  function renderMovie() {
+  function renderReview() {
     const path = window.location.pathname.split(`/`);
     const id = path[path.length - 2];
 
@@ -63,7 +63,7 @@ const AddReview = (props) => {
     </section>;
   }
 
-  return renderMovie();
+  return renderReview();
 };
 
 AddReview.propTypes = {

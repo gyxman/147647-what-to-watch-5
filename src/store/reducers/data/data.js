@@ -3,6 +3,7 @@ import {ActionType} from "../../action";
 
 const initialState = {
   movies: [],
+  favoriteMovies: [],
   genres: [],
   promoMovie: null,
 };
@@ -12,6 +13,10 @@ const data = (state = initialState, action) => {
     case ActionType.LOAD_MOVIES:
       return extend(state, {
         movies: action.payload.map(movieMapDtoToLocal),
+      });
+    case ActionType.LOAD_FAVORITE_MOVIES:
+      return extend(state, {
+        favoriteMovies: action.payload.map(movieMapDtoToLocal),
       });
     case ActionType.LOAD_GENRES:
       return extend(state, {

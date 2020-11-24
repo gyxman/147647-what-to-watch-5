@@ -6,49 +6,36 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import Footer from "../footer/footer";
+import Header from "../header/header";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const MyList = (props) => {
-  const {movies} = props;
+  const {favoriteMovies} = props;
 
   return <div className="user-page">
-    <header className="page-header user-page__head">
-      <div className="logo">
-        <a href="main.html" className="logo__link">
-          <span className="logo__letter logo__letter--1">W</span>
-          <span className="logo__letter logo__letter--2">T</span>
-          <span className="logo__letter logo__letter--3">W</span>
-        </a>
-      </div>
-
-      <h1 className="page-title user-page__title">My list</h1>
-
-      <div className="user-block">
-        <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-        </div>
-      </div>
-    </header>
+    <Header className={`user-page__head`} render={() => {
+      return <h1 className="page-title user-page__title">My list</h1>;
+    }}/>
 
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <MoviesWithShowMoreButtonWrapped movies={movies} limit={MOVIES_LIMIT}/>
+      <MoviesWithShowMoreButtonWrapped movies={favoriteMovies} limit={MOVIES_LIMIT}/>
     </section>
 
-    <Footer />
+    <Footer/>
   </div>;
 };
 
 MyList.propTypes = {
-  movies: PropTypes.arrayOf(
+  favoriteMovies: PropTypes.arrayOf(
       PropTypes.shape(MoviePropType)
   ).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.movies,
+const mapStateToProps = ({DATA}) => ({
+  favoriteMovies: DATA.favoriteMovies,
 });
 
 export {MyList};

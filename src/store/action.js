@@ -1,11 +1,11 @@
 export const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   LOAD_MOVIES: `LOAD_MOVIES`,
+  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   LOAD_GENRES: `LOAD_GENRES`,
   LOAD_PROMO_MOVIE: `LOAD_PROMO_MOVIE`,
   LOAD_MOVIE_BY_ID: `LOAD_MOVIE_BY_ID`,
   LOAD_COMMENTS_BY_ID: `LOAD_COMMENTS_BY_ID`,
-  ADD_MOVIE_TO_FAVORITES: `ADD_MOVIE_TO_FAVORITES`,
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   AUTHORIZED_SUCCESS: `AUTHORIZED_SUCCESS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
@@ -15,6 +15,11 @@ export const ActionType = {
 
 export const loadMoviesAction = (movies) => ({
   type: ActionType.LOAD_MOVIES,
+  payload: movies,
+});
+
+export const loadFavoriteMoviesAction = (movies) => ({
+  type: ActionType.LOAD_FAVORITE_MOVIES,
   payload: movies,
 });
 
@@ -35,11 +40,6 @@ export const loadMovieByIdAction = (movie) => ({
 
 export const loadCommentsByIdAction = (movie) => ({
   type: ActionType.LOAD_COMMENTS_BY_ID,
-  payload: movie,
-});
-
-export const addMovieToFavoritesAction = (movie) => ({
-  type: ActionType.ADD_MOVIE_TO_FAVORITES,
   payload: movie,
 });
 

@@ -8,7 +8,8 @@ export const APIRoute = {
   MOVIES: `/films`,
   PROMO_MOVIE: `/films/promo`,
   LOGIN: `/login`,
-  COMMENTS: `/comments`
+  COMMENTS: `/comments`,
+  FAVORITE: `/favorite`
 };
 
 export const AppRoute = {

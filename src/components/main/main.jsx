@@ -48,7 +48,7 @@ const Main = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button onClick={() => addMovieToFavorites(promoMovie)} className="btn btn--list movie-card__button" type="button">
+              <button onClick={() => addMovieToFavorites(promoMovie.id)} className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"/>
                 </svg>

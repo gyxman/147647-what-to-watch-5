@@ -7,18 +7,18 @@ import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-wit
 import {AppRoute, MOVIES_LIMIT_FOR_RELATED} from "../../const";
 import MoviePropType from "../../proptypes/movie-proptypes";
 import {connect} from "react-redux";
-import {fetchMovieById} from "../../store/api-actions";
+import {addMovieToFavorite, fetchMovieById} from "../../store/api-actions";
 import {Link} from "react-router-dom";
 import Header from "../header/header";
 import Footer from "../footer/footer";
-import {addMovieToFavoritesAction} from "../../store/action";
 import {getMoviesByGenre} from "../../utils";
+import {checkMovieInFavoriteList} from "../../store/selectors";
 
 const TabsWrapped = withActiveItem(Tabs);
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Movie = (props) => {
-  const {renderPlayer, openFullSize, movies, movie, authorizationStatus, onLoad, addMovieToFavorites} = props;
+  const {renderPlayer, openFullSize, movies, movie, authorizationStatus, onLoad, addMovieToFavorites, inFavoriteList} = props;
 
   function renderMovie() {
     const path = window.location.pathname.split(`/`);
@@ -56,10 +56,10 @@ const Movie = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button onClick={() => addMovieToFavorites(movie)} className="btn btn--list movie-card__button"
+                <button onClick={() => addMovieToFavorites(movie.id, Number(!inFavoriteList))} className="btn btn--list movie-card__button"
                   type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
+                    <use xlinkHref={inFavoriteList ? `#in-list` : `#add`}/>
                   </svg>
                   <span>My list</span>
                 </button>
@@ -107,21 +107,23 @@ Movie.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape(MoviePropType)),
   authorizationStatus: PropTypes.string.isRequired,
   onLoad: PropTypes.func.isRequired,
-  addMovieToFavorites: PropTypes.func.isRequired
+  addMovieToFavorites: PropTypes.func.isRequired,
+  inFavoriteList: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({DATA, PROCESS, USER}) => ({
-  movies: DATA.movies,
-  movie: PROCESS.currentMovie,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  movies: state.DATA.movies,
+  movie: state.PROCESS.currentMovie,
+  authorizationStatus: state.USER.authorizationStatus,
+  inFavoriteList: checkMovieInFavoriteList(state.PROCESS.currentMovie ? state.PROCESS.currentMovie.id : 0)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(id) {
     dispatch(fetchMovieById(id));
   },
-  addMovieToFavorites(movie) {
-    dispatch(addMovieToFavoritesAction(movie));
+  addMovieToFavorites(id, status) {
+    dispatch(addMovieToFavorite(id, status));
   },
 });
 

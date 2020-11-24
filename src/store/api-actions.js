@@ -1,7 +1,7 @@
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const";
 import {
   addErrorAction,
-  authorizedSuccessAction, loadCommentsByIdAction, loadGenresAction,
+  authorizedSuccessAction, loadCommentsByIdAction, loadFavoriteMoviesAction, loadGenresAction,
   loadMovieByIdAction,
   loadMoviesAction, loadPromoMovieAction,
   redirectToRouteAction,
@@ -27,6 +27,11 @@ export const fetchCommentsById = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.COMMENTS}/${id}`).then(({data}) => dispatch(loadCommentsByIdAction(data)))
 );
 
+export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.MOVIES)
+    .then(({data}) => dispatch(loadFavoriteMoviesAction(data)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(({data}) => dispatch(authorizedSuccessAction(data)))
@@ -45,4 +50,10 @@ export const sendNewComment = (id, {rating, comment}) => (dispatch, _getState, a
   api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
     .then(() => dispatch(redirectToRouteAction(`${AppRoute.MOVIES}/${id}`)))
     .catch(() => dispatch(addErrorAction(`Произошла ошибка, попробуйте позже`)))
+);
+
+export const addMovieToFavorite = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/${status}`)
+    .then(() => fetchFavoriteMovies())
+    .catch(() => {})
 );
