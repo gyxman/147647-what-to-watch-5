@@ -9,6 +9,8 @@ const withVideoPlayer = (Component) => {
       this.state = {
         isPlaying: false,
         isFullSize: false,
+        currentTime: 0,
+        duration: 0
       };
 
       this.timerId = null;
@@ -18,6 +20,8 @@ const withVideoPlayer = (Component) => {
       this.closeFullSize = this.closeFullSize.bind(this);
       this.playFullSize = this.playFullSize.bind(this);
       this.pauseFullSize = this.pauseFullSize.bind(this);
+      this.updateTime = this.updateTime.bind(this);
+      this.setDuration = this.setDuration.bind(this);
     }
 
     mouseEnter() {
@@ -46,8 +50,16 @@ const withVideoPlayer = (Component) => {
       this.setState({isPlaying: false});
     }
 
+    updateTime(currentTime) {
+      this.setState({currentTime});
+    }
+
+    setDuration(duration) {
+      this.setState({duration});
+    }
+
     render() {
-      const {isPlaying, isFullSize} = this.state;
+      const {isPlaying, isFullSize, currentTime, duration} = this.state;
 
       return <Component
         {...this.props}
@@ -58,12 +70,16 @@ const withVideoPlayer = (Component) => {
               src={src}
               isPlaying={isPlaying}
               isFullSize={isFullSize}
+              currentTime={currentTime}
+              duration={duration}
               poster={poster}
               onMouseEnter={this.mouseEnter}
               onMouseLeave={this.mouseLeave}
               closeFullSize={this.closeFullSize}
               playFullSize={this.playFullSize}
               pauseFullSize={this.pauseFullSize}
+              updateTime={this.updateTime}
+              setDuration={this.setDuration}
             />
           );
         }}
