@@ -6,15 +6,15 @@ import MoviesWithShowMoreButton from "../movies-with-show-more-button/movies-wit
 import {MOVIES_LIMIT} from "../../const";
 import withShowMore from "../../hocs/with-show-more/with-show-more";
 import MoviePropType from "../../proptypes/movie-proptypes";
-import {getMoviesByActiveGenre} from "../../store/selectors";
+import {checkMovieInFavoriteList, getMoviesByActiveGenre} from "../../store/selectors";
 import Header from "../header/header";
-import {addMovieToFavoritesAction} from "../../store/action";
 import Footer from "../footer/footer";
+import {addMovieToFavorite} from "../../store/api-actions";
 
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
-  const {movies, promoMovie, addMovieToFavorites} = props;
+  const {movies, promoMovie, addMovieToFavorites, inFavoriteList} = props;
 
   return <React.Fragment>
     <section className="movie-card">
@@ -48,9 +48,10 @@ const Main = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button onClick={() => addMovieToFavorites(promoMovie.id)} className="btn btn--list movie-card__button" type="button">
+              <button onClick={() => addMovieToFavorites(promoMovie.id, Number(!inFavoriteList))} className="btn btn--list movie-card__button"
+                type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"/>
+                  <use xlinkHref={inFavoriteList ? `#in-list` : `#add`}/>
                 </svg>
                 <span>My list</span>
               </button>
@@ -79,17 +80,19 @@ Main.propTypes = {
       PropTypes.shape(MoviePropType)
   ).isRequired,
   promoMovie: PropTypes.shape(MoviePropType),
-  addMovieToFavorites: PropTypes.func.isRequired
+  addMovieToFavorites: PropTypes.func.isRequired,
+  inFavoriteList: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   movies: getMoviesByActiveGenre(state),
   promoMovie: state.DATA.promoMovie,
+  inFavoriteList: checkMovieInFavoriteList(state.DATA.promoMovie ? state.DATA.promoMovie.id : 0)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addMovieToFavorites(movie) {
-    dispatch(addMovieToFavoritesAction(movie));
+  addMovieToFavorites(id, status) {
+    dispatch(addMovieToFavorite(id, status));
   },
 });
 

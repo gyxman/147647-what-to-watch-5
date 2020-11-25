@@ -9,6 +9,8 @@ import withReviewForm from "../../hocs/with-review-form/with-review-form";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import SweetAlert from 'sweetalert2-react';
 import {removeErrorAction} from "../../store/action";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const";
 
 const AddReviewFormWrapped = withReviewForm(withActiveItem(AddReviewForm));
 
@@ -37,7 +39,7 @@ const AddReview = (props) => {
           return <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">{movie.name}</a>
+                <Link to={`${AppRoute.MOVIES}/${movie.id}`} className="breadcrumbs__link">{movie.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

@@ -54,6 +54,7 @@ export const sendNewComment = (id, {rating, comment}) => (dispatch, _getState, a
 
 export const addMovieToFavorite = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${id}/${status}`)
-    .then(() => fetchFavoriteMovies())
+    .then(() => dispatch(fetchFavoriteMovies()))
+    .then(() => dispatch(fetchPromoMovie()))
     .catch(() => {})
 );
