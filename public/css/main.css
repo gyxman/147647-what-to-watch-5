@@ -635,7 +635,7 @@ main {
 
 .movie-card {
   position: relative;
-  z-index: 1;
+  z-index: 9;
   color: #EEE5B5;
   padding-bottom: 78px;
   background: #E1B0B2; }
@@ -937,7 +937,6 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 2;
   /* &::after {
     content: '';
     position: absolute;

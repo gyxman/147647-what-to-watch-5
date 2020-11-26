@@ -50,7 +50,7 @@ const Movie = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button onClick={() => openFullSize()} className="btn btn--play movie-card__button" type="button">
+                <button onClick={openFullSize} className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"/>
                   </svg>

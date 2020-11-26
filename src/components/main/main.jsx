@@ -14,7 +14,7 @@ import {addMovieToFavorite} from "../../store/api-actions";
 const MoviesWithShowMoreButtonWrapped = withShowMore(MoviesWithShowMoreButton);
 
 const Main = (props) => {
-  const {movies, promoMovie, addMovieToFavorites, inFavoriteList} = props;
+  const {movies, promoMovie, addMovieToFavorites, inFavoriteList, renderPlayer, openFullSize} = props;
 
   return <React.Fragment>
     <section className="movie-card">
@@ -30,8 +30,9 @@ const Main = (props) => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src={promoMovie.posterImage} alt={promoMovie.name} width="218"
-              height="327"/>
+            {/* <img src={promoMovie.posterImage} alt={promoMovie.name} width="218"*/}
+            {/*  height="327"/>*/}
+            {renderPlayer(promoMovie.videoLink, promoMovie.posterImage, promoMovie.previewVideoLink)}
           </div>
 
           <div className="movie-card__desc">
@@ -42,7 +43,7 @@ const Main = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button onClick={openFullSize} className="btn btn--play movie-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"/>
                 </svg>
@@ -81,7 +82,9 @@ Main.propTypes = {
   ).isRequired,
   promoMovie: PropTypes.shape(MoviePropType),
   addMovieToFavorites: PropTypes.func.isRequired,
-  inFavoriteList: PropTypes.bool.isRequired
+  inFavoriteList: PropTypes.bool.isRequired,
+  renderPlayer: PropTypes.func.isRequired,
+  openFullSize: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

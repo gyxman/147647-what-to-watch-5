@@ -11,13 +11,14 @@ import browserHistory from "../../browser-history";
 import PrivateRoute from "../private-route/private-route";
 import {AppRoute} from "../../const";
 
+const MainWrapped = withVideoPlayer(Main);
 const MovieWrapped = withVideoPlayer(Movie);
 
 const App = () => {
   return <BrowserRouter history={browserHistory}>
     <Switch>
       <Route path={AppRoute.ROOT} exact>
-        <Main />
+        <MainWrapped />
       </Route>
       <Route path={AppRoute.LOGIN} exact>
         <SignIn />
