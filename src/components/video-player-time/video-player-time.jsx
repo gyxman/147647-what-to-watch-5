@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {setCurrentMovieDuration, setCurrentMovieTime} from "../../store/action";
+import {formatMovieTime} from "../../utils";
 
 const VideoPlayerTime = (props) => {
   const {getVideo, onLoaded, duration, currentTime, setDuration, setTime} = props;
@@ -28,7 +29,7 @@ const VideoPlayerTime = (props) => {
       <progress className="player__progress" value={duration ? currentTime / duration * 100 : 0} max="100"/>
       <div className="player__toggler" style={{left: `${currentTime / duration * 100}%`}}>Toggler</div>
     </div>
-    <div className="player__time-value">1:30:29</div>
+    <div className="player__time-value">{formatMovieTime(duration - currentTime)}</div>
   </React.Fragment>;
 };
 

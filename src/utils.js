@@ -61,15 +61,27 @@ export const getTextForRating = (rating) => {
 };
 
 export const formatTime = (time) => {
-  const hour = Math.floor(time / 60);
+  const hours = Math.floor(time / 60);
 
-  return `${hour}h ${time - hour * 60}m`;
+  return `${hours}h ${time - hours * 60}m`;
 };
 
 export const formatDateToTime = (date) => {
   const currentDate = new Date(date);
 
   return `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`;
+};
+
+export const formatMovieTime = (time) => {
+  if (typeof time !== `number` || time === 0) {
+    return ``;
+  }
+
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time - hours * 3600) / 60);
+  const seconds = Math.floor(time - hours * 3600 - minutes * 60);
+
+  return `${hours ? hours + `:` : ``}${minutes ? minutes + `:` : ``}${seconds < 10 ? `0` + seconds : seconds}`;
 };
 
 const MONTHS = [
