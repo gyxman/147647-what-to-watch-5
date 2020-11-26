@@ -7,7 +7,9 @@ const initialState = {
   currentMovie: null,
   commentsForCurrentMovie: [],
   favoriteMovies: [],
-  error: null
+  error: null,
+  currentMovieDuration: 0,
+  currentMovieTime: 0,
 };
 
 const process = (state = initialState, action) => {
@@ -22,14 +24,14 @@ const process = (state = initialState, action) => {
       return extend(state, {
         commentsForCurrentMovie: action.payload,
       });
-    case ActionType.ADD_MOVIE_TO_FAVORITES:
-      return extend(state, {
-        favoriteMovies: state.favoriteMovies.push(action.payload),
-      });
     case ActionType.ADD_ERROR:
       return extend(state, {error: action.payload});
     case ActionType.REMOVE_ERROR:
       return extend(state, {error: null});
+    case ActionType.SET_CURRENT_MOVIE_DURATION:
+      return extend(state, {currentMovieDuration: action.payload});
+    case ActionType.SET_CURRENT_MOVIE_TIME:
+      return extend(state, {currentMovieTime: action.payload});
   }
 
   return state;

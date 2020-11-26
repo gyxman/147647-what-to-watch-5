@@ -9,19 +9,20 @@ const withVideoPlayer = (Component) => {
       this.state = {
         isPlaying: false,
         isFullSize: false,
-        currentTime: 0,
-        duration: 0
+        isLoading: true,
+        isFullSizeVideo: false,
       };
 
       this.timerId = null;
       this.mouseEnter = this.mouseEnter.bind(this);
       this.mouseLeave = this.mouseLeave.bind(this);
       this.openFullSize = this.openFullSize.bind(this);
+      this.openFullSizeVideo = this.openFullSizeVideo.bind(this);
+      this.openFullSizeVideoDone = this.openFullSizeVideoDone.bind(this);
       this.closeFullSize = this.closeFullSize.bind(this);
       this.playFullSize = this.playFullSize.bind(this);
       this.pauseFullSize = this.pauseFullSize.bind(this);
-      this.updateTime = this.updateTime.bind(this);
-      this.setDuration = this.setDuration.bind(this);
+      this.onLoaded = this.onLoaded.bind(this);
     }
 
     mouseEnter() {
@@ -35,7 +36,15 @@ const withVideoPlayer = (Component) => {
     }
 
     openFullSize() {
-      this.setState({isFullSize: true, isPlaying: true});
+      this.setState({isFullSize: true});
+    }
+
+    openFullSizeVideo() {
+      this.setState({isFullSizeVideo: true});
+    }
+
+    openFullSizeVideoDone() {
+      this.setState({isFullSizeVideo: false});
     }
 
     closeFullSize() {
@@ -50,36 +59,34 @@ const withVideoPlayer = (Component) => {
       this.setState({isPlaying: false});
     }
 
-    updateTime(currentTime) {
-      this.setState({currentTime});
-    }
-
-    setDuration(duration) {
-      this.setState({duration});
+    onLoaded() {
+      this.setState({isLoading: false});
     }
 
     render() {
-      const {isPlaying, isFullSize, currentTime, duration} = this.state;
+      const {isPlaying, isFullSize, isLoading, isFullSizeVideo} = this.state;
 
       return <Component
         {...this.props}
         openFullSize={this.openFullSize}
-        renderPlayer={(src, poster) => {
+        renderPlayer={(src, poster, previewSrc) => {
           return (
             <VideoPlayer
               src={src}
+              poster={poster}
+              previewSrc={previewSrc}
               isPlaying={isPlaying}
               isFullSize={isFullSize}
-              currentTime={currentTime}
-              duration={duration}
-              poster={poster}
+              isLoading={isLoading}
+              isFullSizeVideo={isFullSizeVideo}
               onMouseEnter={this.mouseEnter}
               onMouseLeave={this.mouseLeave}
               closeFullSize={this.closeFullSize}
               playFullSize={this.playFullSize}
               pauseFullSize={this.pauseFullSize}
-              updateTime={this.updateTime}
-              setDuration={this.setDuration}
+              onLoaded={this.onLoaded}
+              openFullSizeVideo={this.openFullSizeVideo}
+              openFullSizeVideoDone={this.openFullSizeVideoDone}
             />
           );
         }}

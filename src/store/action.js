@@ -11,6 +11,8 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   ADD_ERROR: `ADD_ERROR`,
   REMOVE_ERROR: `REMOVE_ERROR`,
+  SET_CURRENT_MOVIE_DURATION: `SET_CURRENT_MOVIE_DURATION`,
+  SET_CURRENT_MOVIE_TIME: `SET_CURRENT_MOVIE_TIME`,
 };
 
 export const loadMoviesAction = (movies) => ({
@@ -70,5 +72,15 @@ export const addErrorAction = (error) => ({
 
 export const removeErrorAction = () => ({
   type: ActionType.REMOVE_ERROR,
+});
+
+export const setCurrentMovieDuration = (duration) => ({
+  type: ActionType.SET_CURRENT_MOVIE_DURATION,
+  payload: duration
+});
+
+export const setCurrentMovieTime = (time) => ({
+  type: ActionType.SET_CURRENT_MOVIE_TIME,
+  payload: time
 });
 

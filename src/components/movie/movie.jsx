@@ -74,7 +74,7 @@ const Movie = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              {renderPlayer(`https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`, movie.posterImage)}
+              {renderPlayer(movie.videoLink, movie.posterImage, movie.previewVideoLink)}
             </div>
 
             <div className="movie-card__desc">
