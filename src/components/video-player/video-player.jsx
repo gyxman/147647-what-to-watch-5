@@ -37,14 +37,6 @@ class VideoPlayer extends PureComponent {
 
       if (isPlaying) {
         fullVideo.play();
-
-        // if (video.currentTime === 0 && currentTime !== 0) {
-        //   video.currentTime = currentTime;
-        // }
-        //
-        // fullVideo.addEventListener(`progress`, function (e) {
-        //   updateTime(e.target.currentTime);
-        // });
       } else {
         fullVideo.load();
       }

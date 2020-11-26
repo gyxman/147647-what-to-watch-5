@@ -17,6 +17,7 @@ const VideoPlayerTime = (props) => {
 
     video.addEventListener(`progress`, function (e) {
       const time = e.target.currentTime;
+
       if (Math.floor(time) > currentTime) {
         setTime(time);
       }
