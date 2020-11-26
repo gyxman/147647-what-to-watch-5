@@ -10,18 +10,20 @@ const VideoPlayerTime = (props) => {
   setTimeout(() => {
     const video = getVideo().current;
 
-    video.oncanplaythrough = (e) => {
-      onLoaded();
-      setDuration(e.target.duration);
-    };
+    if (video) {
+      video.oncanplaythrough = (e) => {
+        onLoaded();
+        setDuration(e.target.duration);
+      };
 
-    video.addEventListener(`progress`, function (e) {
-      const time = e.target.currentTime;
+      video.addEventListener(`progress`, function (e) {
+        const time = e.target.currentTime;
 
-      if (Math.floor(time) > currentTime) {
-        setTime(time);
-      }
-    });
+        if (Math.floor(time) > currentTime) {
+          setTime(time);
+        }
+      });
+    }
   }, 0);
 
 
@@ -40,12 +42,12 @@ VideoPlayerTime.propTypes = {
   duration: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
   setDuration: PropTypes.func.isRequired,
-  setTime: PropTypes.func.isRequired,
+  setTime: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({PROCESS}) => ({
   duration: PROCESS.currentMovieDuration,
-  currentTime: PROCESS.currentMovieTime
+  currentTime: PROCESS.currentMovieTime,
 });
 
 const mapDispatchToProps = (dispatch) => ({
