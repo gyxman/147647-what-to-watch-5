@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabReviews is rendered correctly 1`] = `
+<div
+  className="movie-card__reviews movie-card__row"
+>
+  <div
+    className="movie-card__reviews-col"
+  >
+    <div
+      className="review"
+    >
+      <blockquote
+        className="review__quote"
+      >
+        <p
+          className="review__text"
+        >
+          I love this movie. This film is a milestone in cinematography. Great Immersive camera-work. This film is an experience and i has already seen it 4 times and I only see more quality of the film.
+        </p>
+        <footer
+          className="review__details"
+        >
+          <cite
+            className="review__author"
+          >
+            Christina
+          </cite>
+          <time
+            className="review__date"
+            dateTime="2020-9-9"
+          >
+            October 9, 2020
+          </time>
+        </footer>
+      </blockquote>
+      <div
+        className="review__rating"
+      >
+        3.3
+      </div>
+    </div>
+  </div>
+  <div
+    className="movie-card__reviews-col"
+  />
+</div>
+`;

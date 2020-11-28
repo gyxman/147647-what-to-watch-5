@@ -1,7 +1,10 @@
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const";
 import {
   addErrorAction,
-  authorizedSuccessAction, loadCommentsByIdAction, loadFavoriteMoviesAction, loadGenresAction,
+  authorizedSuccessAction,
+  loadCommentsByIdAction,
+  loadFavoriteMoviesAction,
+  loadGenresAction,
   loadMovieByIdAction,
   loadMoviesAction, loadPromoMovieAction,
   redirectToRouteAction,

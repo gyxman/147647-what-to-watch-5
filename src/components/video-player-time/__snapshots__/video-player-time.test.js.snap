@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoPlayerTime is rendered correctly 1`] = `
+Array [
+  <div
+    className="player__time"
+  >
+    <progress
+      className="player__progress"
+      max="100"
+      value={0}
+    />
+    <div
+      className="player__toggler"
+      style={
+        Object {
+          "left": "0%",
+        }
+      }
+    >
+      Toggler
+    </div>
+  </div>,
+  <div
+    className="player__time-value"
+  >
+    01
+  </div>,
+]
+`;

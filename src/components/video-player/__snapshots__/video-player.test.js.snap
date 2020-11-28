@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoPlayer is rendered correctly 1`] = `
+<video
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  poster="https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Snatch.jpg"
+  style={
+    Object {
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+/>
+`;

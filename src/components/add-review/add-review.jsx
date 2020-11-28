@@ -69,11 +69,11 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  movie: PropTypes.shape(MoviePropType),
+  movie: PropTypes.shape(MoviePropType).isRequired,
   onLoad: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  error: PropTypes.string,
   removeError: PropTypes.func.isRequired,
+  error: PropTypes.string,
 };
 
 const mapStateToProps = ({PROCESS}) => ({
